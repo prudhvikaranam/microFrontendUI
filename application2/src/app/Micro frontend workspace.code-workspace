@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "..\\..\\..\\application1"
+		},
+		{
+			"path": "..\\.."
+		},
+		{
+			"path": "..\\..\\..\\root"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "root"
+	}
+}
