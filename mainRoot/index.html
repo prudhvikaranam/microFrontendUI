@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Root Microfrontends</title>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/zone.js@0.10.3/dist/zone.min.js"></script> -->
+
+    <meta name="importmap-type" content="systemjs-importmap" />
+    <script
+      type="systemjs-importmap"
+      src="https://storage.googleapis.com/polyglot.microfrontends.app/importmap.json"
+    ></script>
+    <script type="systemjs-importmap">
+      {
+        "imports": {
+          "application1": "http://localhost:4300/main.js/",
+          "application2": "http://localhost:4400/main.js/",
+          "single-spa": "https://cdnjs.cloudflare.com/ajax/libs/single-spa/4.3.5/system/single-spa.min.js"
+        }
+      }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/import-map-overrides@2.2.0/dist/import-map-overrides.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/systemjs@6.8.3/dist/system.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/systemjs@6.8.3/dist/extras/amd.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/zone.js@0.10.3/dist/zone.min.js"></script> -->
+  </head>
+  <body>
+    <script>
+      System.import("single-spa").then(function (singleSpa) {
+        singleSpa.registerApplication(
+          "application1",
+          function () {
+            return System.import("application1");
+          },
+          function (location) {
+            return true;
+          }
+        );
+
+        singleSpa.registerApplication(
+          "application2",
+          function () {
+            return System.import("application2");
+          },
+          function (location) {
+            return location.pathname.startsWith('/app2');
+            // return true;
+          }
+        );
+        singleSpa.start();
+      });
+    </script>
+
+    <import-map-overrides-full></import-map-overrides-full>
+  </body>
+</html>
